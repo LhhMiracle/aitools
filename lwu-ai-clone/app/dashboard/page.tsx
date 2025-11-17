@@ -1,7 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   Coins,
@@ -12,25 +11,66 @@ import {
   Zap,
   Sparkles,
 } from 'lucide-react';
-import { useStore } from '@/store/useStore';
+import { useSession } from 'next-auth/react';
 import Header from '@/components/Header';
 import Link from 'next/link';
 
+interface Generation {
+  id: string;
+  type: string;
+  status: string;
+  createdAt: string;
+  resultUrl?: string;
+}
+
 export default function DashboardPage() {
-  const router = useRouter();
-  const { user, isAuthenticated, creations } = useStore();
+  const { data: session, status } = useSession();
+  const [generations, setGenerations] = useState<Generation[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      router.push('/');
+    async function fetchGenerations() {
+      if (status === 'authenticated') {
+        try {
+          const response = await fetch('/api/generations');
+          if (response.ok) {
+            const data = await response.json();
+            setGenerations(data);
+          }
+        } catch (error) {
+          console.error('Failed to fetch generations:', error);
+        } finally {
+          setLoading(false);
+        }
+      }
     }
-  }, [isAuthenticated, router]);
+    fetchGenerations();
+  }, [status]);
 
-  if (!isAuthenticated || !user) {
+  if (status === 'loading' || loading) {
+    return (
+      <div className="min-h-screen bg-black text-white">
+        <Header />
+        <main className="container mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-12">
+          <div className="animate-pulse">
+            <div className="h-12 bg-white/5 rounded-lg w-1/3 mb-12"></div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[1, 2, 3, 4].map(i => (
+                <div key={i} className="h-32 bg-white/5 rounded-2xl"></div>
+              ))}
+            </div>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
+  if (!session?.user) {
     return null;
   }
 
-  const recentCreations = creations.slice(0, 6);
+  const user = session.user;
+  const recentCreations = generations.slice(0, 6);
 
   const stats = [
     {
@@ -41,19 +81,19 @@ export default function DashboardPage() {
     },
     {
       label: 'Current Plan',
-      value: user.plan.toUpperCase(),
+      value: user.plan?.toUpperCase() || 'FREE',
       icon: Crown,
       color: 'from-purple-500 to-pink-500',
     },
     {
       label: 'Creations',
-      value: creations.length,
+      value: generations.length,
       icon: Image,
       color: 'from-blue-500 to-cyan-500',
     },
     {
       label: 'This Month',
-      value: creations.filter(c => {
+      value: generations.filter(c => {
         const now = new Date();
         const createdAt = new Date(c.createdAt);
         return createdAt.getMonth() === now.getMonth() &&
@@ -151,7 +191,7 @@ export default function DashboardPage() {
         >
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-2xl font-bold">Recent Creations</h2>
-            {creations.length > 6 && (
+            {generations.length > 6 && (
               <Link
                 href="/dashboard/history"
                 className="text-indigo-400 hover:text-indigo-300 text-sm font-medium"

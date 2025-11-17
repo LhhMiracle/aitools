@@ -3,16 +3,18 @@
 import { useState } from 'react';
 import { Sparkles, User, LogOut, LayoutDashboard, Coins } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useStore } from '@/store/useStore';
+import { useSession, signOut } from 'next-auth/react';
 import AuthModal from './AuthModal';
 import Link from 'next/link';
 
 export default function Header() {
+  const { data: session, status } = useSession();
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [authMode, setAuthMode] = useState<'login' | 'register'>('login');
   const [showUserMenu, setShowUserMenu] = useState(false);
 
-  const { user, isAuthenticated, logout } = useStore();
+  const isAuthenticated = status === 'authenticated';
+  const isLoading = status === 'loading';
 
   const handleSignIn = () => {
     setAuthMode('login');
@@ -26,6 +28,11 @@ export default function Header() {
       setAuthMode('register');
       setShowAuthModal(true);
     }
+  };
+
+  const handleSignOut = async () => {
+    setShowUserMenu(false);
+    await signOut({ callbackUrl: '/' });
   };
 
   return (
@@ -65,20 +72,26 @@ export default function Header() {
 
             {/* CTA Buttons */}
             <div className="flex items-center gap-4">
-              {isAuthenticated && user ? (
+              {isLoading ? (
+                <div className="w-32 h-10 bg-white/5 rounded-full animate-pulse" />
+              ) : isAuthenticated && session?.user ? (
                 <div className="relative">
                   <button
                     onClick={() => setShowUserMenu(!showUserMenu)}
                     className="flex items-center gap-3 px-4 py-2 bg-white/5 hover:bg-white/10 rounded-full transition-colors"
                   >
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 flex items-center justify-center">
-                      <User className="w-5 h-5" />
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 flex items-center justify-center overflow-hidden">
+                      {session.user.image ? (
+                        <img src={session.user.image} alt={session.user.name || ''} className="w-full h-full object-cover" />
+                      ) : (
+                        <User className="w-5 h-5" />
+                      )}
                     </div>
                     <div className="hidden sm:block text-left">
-                      <div className="text-sm font-medium">{user.name}</div>
+                      <div className="text-sm font-medium">{session.user.name}</div>
                       <div className="text-xs text-gray-400 flex items-center gap-1">
                         <Coins className="w-3 h-3" />
-                        {user.credits} credits
+                        {session.user.credits || 0} credits
                       </div>
                     </div>
                   </button>
@@ -101,11 +114,7 @@ export default function Header() {
                           Dashboard
                         </Link>
                         <button
-                          onClick={() => {
-                            logout();
-                            setShowUserMenu(false);
-                            window.location.href = '/';
-                          }}
+                          onClick={handleSignOut}
                           className="w-full flex items-center gap-3 px-4 py-3 hover:bg-white/5 transition-colors text-red-400"
                         >
                           <LogOut className="w-4 h-4" />
