@@ -60,7 +60,7 @@ export async function POST(request: NextRequest) {
         type: toolId,
         status: 'processing',
         prompt: params.prompt || params.text || '',
-        inputUrl: params.image || '',
+        originalUrl: params.image || '',
         creditsUsed: requiredCredits,
       },
     });
