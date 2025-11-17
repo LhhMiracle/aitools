@@ -94,7 +94,7 @@ export default function Pricing() {
 
   return (
     <section id="pricing" className="py-24 relative">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
