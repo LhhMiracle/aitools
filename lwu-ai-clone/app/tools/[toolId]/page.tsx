@@ -196,8 +196,21 @@ export default function ToolPage() {
 
       // Upload image if required
       if (tool.requiresImage && imageFile) {
-        // For now, use data URL. In production, upload to S3/Cloudinary
-        imageUrl = imagePreview;
+        const uploadFormData = new FormData();
+        uploadFormData.append('file', imageFile);
+
+        const uploadResponse = await fetch('/api/upload', {
+          method: 'POST',
+          body: uploadFormData,
+        });
+
+        if (!uploadResponse.ok) {
+          const uploadError = await uploadResponse.json();
+          throw new Error(uploadError.error || 'Failed to upload image');
+        }
+
+        const uploadData = await uploadResponse.json();
+        imageUrl = uploadData.url;
       }
 
       // Call generate API

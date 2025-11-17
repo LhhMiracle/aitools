@@ -11,6 +11,7 @@ import {
   imageToVideo,
   textToSpeech,
 } from '@/lib/replicate';
+import { fileToDataUri } from '@/lib/fileUtils';
 
 export async function POST(request: NextRequest) {
   try {
@@ -108,6 +109,16 @@ async function processGeneration(
 ) {
   try {
     let output: any;
+
+    // Convert image URL to data URI if present
+    if (params.image) {
+      try {
+        params.image = await fileToDataUri(params.image);
+      } catch (error) {
+        console.error('Failed to convert image to data URI:', error);
+        throw new Error('Failed to process input image');
+      }
+    }
 
     switch (toolId) {
       case 'image-generation':
