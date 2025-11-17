@@ -12,16 +12,17 @@ datasource db {
 
 // User model
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String    @unique
-  emailVerified DateTime?
-  image         String?
-  password      String?   // For credential login
-  credits       Int       @default(10)
-  plan          String    @default("FREE") // FREE, PRO, ENTERPRISE
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  id               String    @id @default(cuid())
+  name             String?
+  email            String    @unique
+  emailVerified    DateTime?
+  image            String?
+  password         String?   // For credential login
+  credits          Int       @default(10)
+  plan             String    @default("FREE") // FREE, PRO, PREMIUM
+  stripeCustomerId String?   @unique // Stripe customer ID for payments
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
 
   accounts      Account[]
   sessions      Session[]
@@ -78,10 +79,10 @@ model VerificationToken {
 model Generation {
   id          String   @id @default(cuid())
   userId      String
-  type        String   // IMAGE_GENERATION, BACKGROUND_REMOVAL, etc.
-  status      String   @default("PROCESSING") // PENDING, PROCESSING, COMPLETED, FAILED
+  type        String   // image-generation, background-removal, etc.
+  status      String   @default("processing") // processing, completed, failed
   prompt      String?
-  originalUrl String?
+  inputUrl    String?  // Original/input image URL
   resultUrl   String?
   parameters  String?  // JSON string for generation parameters
   creditsUsed Int

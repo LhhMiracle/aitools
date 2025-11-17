@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Check, Zap, Crown, Rocket, Loader2 } from 'lucide-react';
-import { useStore } from '@/store/useStore';
+import { useSession } from 'next-auth/react';
 
 const plans = [
   {
@@ -62,7 +62,7 @@ const plans = [
 ];
 
 export default function Pricing() {
-  const { user, isAuthenticated } = useStore();
+  const { data: session, status } = useSession();
   const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
 
   const handleUpgrade = async (planName: string) => {
@@ -71,7 +71,7 @@ export default function Pricing() {
       return;
     }
 
-    if (!isAuthenticated || !user) {
+    if (status !== 'authenticated' || !session?.user) {
       alert('Please sign in first');
       return;
     }
@@ -79,15 +79,31 @@ export default function Pricing() {
     setLoadingPlan(planName.toLowerCase());
 
     try {
-      // In a real app, this would call your Stripe API
-      // For demo purposes, we'll simulate the upgrade
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      // Call Stripe Checkout API
+      const response = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          packageId: planName.toLowerCase(),
+          type: 'subscription',
+        }),
+      });
 
-      alert(`Demo: In production, this would redirect to Stripe checkout for ${planName} plan`);
-      setLoadingPlan(null);
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to create checkout session');
+      }
+
+      // Redirect to Stripe Checkout
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        throw new Error('No checkout URL returned');
+      }
     } catch (error) {
       console.error('Checkout error:', error);
-      alert('Something went wrong. Please try again.');
+      alert(error instanceof Error ? error.message : 'Something went wrong. Please try again.');
       setLoadingPlan(null);
     }
   };
