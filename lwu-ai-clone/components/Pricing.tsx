@@ -1,7 +1,9 @@
 'use client';
 
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Check, Zap, Crown, Rocket } from 'lucide-react';
+import { Check, Zap, Crown, Rocket, Loader2 } from 'lucide-react';
+import { useStore } from '@/store/useStore';
 
 const plans = [
   {
@@ -60,6 +62,36 @@ const plans = [
 ];
 
 export default function Pricing() {
+  const { user, isAuthenticated } = useStore();
+  const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
+
+  const handleUpgrade = async (planName: string) => {
+    if (planName === 'Free') {
+      window.location.href = '/dashboard';
+      return;
+    }
+
+    if (!isAuthenticated || !user) {
+      alert('Please sign in first');
+      return;
+    }
+
+    setLoadingPlan(planName.toLowerCase());
+
+    try {
+      // In a real app, this would call your Stripe API
+      // For demo purposes, we'll simulate the upgrade
+      await new Promise(resolve => setTimeout(resolve, 1500));
+
+      alert(`Demo: In production, this would redirect to Stripe checkout for ${planName} plan`);
+      setLoadingPlan(null);
+    } catch (error) {
+      console.error('Checkout error:', error);
+      alert('Something went wrong. Please try again.');
+      setLoadingPlan(null);
+    }
+  };
+
   return (
     <section id="pricing" className="py-24 relative">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -133,12 +165,22 @@ export default function Pricing() {
                   </div>
 
                   {/* CTA Button */}
-                  <button className={`w-full py-3 px-6 rounded-xl font-semibold transition-all mb-8 ${
+                  <button
+                    onClick={() => handleUpgrade(plan.name)}
+                    disabled={loadingPlan === plan.name.toLowerCase()}
+                    className={`w-full py-3 px-6 rounded-xl font-semibold transition-all mb-8 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed ${
                     plan.popular
                       ? 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white hover:shadow-xl hover:shadow-indigo-500/50'
                       : 'bg-white/10 text-white hover:bg-white/20'
                   }`}>
-                    {plan.cta}
+                    {loadingPlan === plan.name.toLowerCase() ? (
+                      <>
+                        <Loader2 className="w-5 h-5 animate-spin" />
+                        Processing...
+                      </>
+                    ) : (
+                      plan.cta
+                    )}
                   </button>
 
                   {/* Features */}

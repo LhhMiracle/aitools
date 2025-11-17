@@ -1,0 +1,219 @@
+'use client';
+
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { motion } from 'framer-motion';
+import {
+  Coins,
+  Crown,
+  Image,
+  Clock,
+  TrendingUp,
+  Zap,
+  Sparkles,
+} from 'lucide-react';
+import { useStore } from '@/store/useStore';
+import Header from '@/components/Header';
+import Link from 'next/link';
+
+export default function DashboardPage() {
+  const router = useRouter();
+  const { user, isAuthenticated, creations } = useStore();
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.push('/');
+    }
+  }, [isAuthenticated, router]);
+
+  if (!isAuthenticated || !user) {
+    return null;
+  }
+
+  const recentCreations = creations.slice(0, 6);
+
+  const stats = [
+    {
+      label: 'Total Credits',
+      value: user.credits,
+      icon: Coins,
+      color: 'from-yellow-500 to-orange-500',
+    },
+    {
+      label: 'Current Plan',
+      value: user.plan.toUpperCase(),
+      icon: Crown,
+      color: 'from-purple-500 to-pink-500',
+    },
+    {
+      label: 'Creations',
+      value: creations.length,
+      icon: Image,
+      color: 'from-blue-500 to-cyan-500',
+    },
+    {
+      label: 'This Month',
+      value: creations.filter(c => {
+        const now = new Date();
+        const createdAt = new Date(c.createdAt);
+        return createdAt.getMonth() === now.getMonth() &&
+               createdAt.getFullYear() === now.getFullYear();
+      }).length,
+      icon: TrendingUp,
+      color: 'from-green-500 to-emerald-500',
+    },
+  ];
+
+  return (
+    <div className="min-h-screen bg-black text-white">
+      <Header />
+
+      <main className="container mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-12">
+        {/* Welcome Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-12"
+        >
+          <h1 className="text-4xl font-bold mb-2">
+            Welcome back, {user.name}! 👋
+          </h1>
+          <p className="text-gray-400">
+            Here's what's happening with your AI creations today.
+          </p>
+        </motion.div>
+
+        {/* Stats Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          {stats.map((stat, index) => {
+            const Icon = stat.icon;
+            return (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                className="p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-white/20 transition-all"
+              >
+                <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${stat.color} p-2.5 mb-4`}>
+                  <Icon className="w-full h-full text-white" />
+                </div>
+                <div className="text-3xl font-bold mb-1">{stat.value}</div>
+                <div className="text-sm text-gray-400">{stat.label}</div>
+              </motion.div>
+            );
+          })}
+        </div>
+
+        {/* Quick Actions */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          className="mb-12"
+        >
+          <h2 className="text-2xl font-bold mb-6">Quick Actions</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <Link
+              href="/tools"
+              className="group p-6 rounded-2xl bg-gradient-to-br from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 hover:border-indigo-500/40 transition-all"
+            >
+              <Sparkles className="w-8 h-8 text-indigo-400 mb-3 group-hover:scale-110 transition-transform" />
+              <h3 className="text-lg font-semibold mb-1">Create New</h3>
+              <p className="text-sm text-gray-400">Start a new AI creation</p>
+            </Link>
+
+            <Link
+              href="/dashboard/history"
+              className="group p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-white/20 transition-all"
+            >
+              <Clock className="w-8 h-8 text-gray-400 mb-3 group-hover:scale-110 transition-transform" />
+              <h3 className="text-lg font-semibold mb-1">View History</h3>
+              <p className="text-sm text-gray-400">Browse past creations</p>
+            </Link>
+
+            <Link
+              href="/#pricing"
+              className="group p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-white/20 transition-all"
+            >
+              <Zap className="w-8 h-8 text-yellow-400 mb-3 group-hover:scale-110 transition-transform" />
+              <h3 className="text-lg font-semibold mb-1">Get More Credits</h3>
+              <p className="text-sm text-gray-400">Upgrade your plan</p>
+            </Link>
+          </div>
+        </motion.div>
+
+        {/* Recent Creations */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
+        >
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-bold">Recent Creations</h2>
+            {creations.length > 6 && (
+              <Link
+                href="/dashboard/history"
+                className="text-indigo-400 hover:text-indigo-300 text-sm font-medium"
+              >
+                View All
+              </Link>
+            )}
+          </div>
+
+          {recentCreations.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {recentCreations.map((creation, index) => (
+                <motion.div
+                  key={creation.id}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.6 + index * 0.1 }}
+                  className="group relative aspect-square rounded-2xl overflow-hidden bg-white/5 border border-white/10 hover:border-white/20 transition-all"
+                >
+                  {/* Placeholder - in real app, this would be the actual image */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/20 to-purple-500/20" />
+
+                  <div className="absolute inset-0 p-4 flex flex-col justify-between">
+                    <div className="flex items-center justify-between">
+                      <span className="px-3 py-1 bg-black/50 backdrop-blur-sm rounded-full text-xs">
+                        {creation.type.replace('-', ' ')}
+                      </span>
+                      <span className={`px-3 py-1 rounded-full text-xs ${
+                        creation.status === 'completed'
+                          ? 'bg-green-500/20 text-green-400'
+                          : creation.status === 'processing'
+                          ? 'bg-yellow-500/20 text-yellow-400'
+                          : 'bg-red-500/20 text-red-400'
+                      }`}>
+                        {creation.status}
+                      </span>
+                    </div>
+
+                    <div className="text-sm text-gray-300">
+                      {new Date(creation.createdAt).toLocaleDateString()}
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12 px-4 rounded-2xl bg-white/5 border border-white/10">
+              <Image className="w-16 h-16 text-gray-600 mx-auto mb-4" />
+              <h3 className="text-xl font-semibold mb-2">No creations yet</h3>
+              <p className="text-gray-400 mb-6">
+                Start creating amazing AI-powered content!
+              </p>
+              <Link
+                href="/tools"
+                className="inline-block px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full font-semibold hover:shadow-lg hover:shadow-indigo-500/50 transition-all"
+              >
+                Create Now
+              </Link>
+            </div>
+          )}
+        </motion.div>
+      </main>
+    </div>
+  );
+}

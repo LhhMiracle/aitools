@@ -9,48 +9,56 @@ const galleryImages = [
     title: 'AI Portrait',
     category: 'Face Enhancement',
     gradient: 'from-pink-500 to-rose-500',
+    image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800&h=800&fit=crop',
   },
   {
     id: 2,
     title: 'Landscape Art',
     category: 'Style Transfer',
     gradient: 'from-blue-500 to-cyan-500',
+    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=800&fit=crop',
   },
   {
     id: 3,
     title: 'Abstract Creation',
     category: 'AI Generation',
     gradient: 'from-purple-500 to-indigo-500',
+    image: 'https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=800&h=800&fit=crop',
   },
   {
     id: 4,
     title: 'Product Photo',
     category: 'Background Removal',
     gradient: 'from-green-500 to-emerald-500',
+    image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&h=800&fit=crop',
   },
   {
     id: 5,
     title: 'Artistic Portrait',
     category: 'Style Transfer',
     gradient: 'from-orange-500 to-red-500',
+    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=800&fit=crop',
   },
   {
     id: 6,
     title: 'Fantasy Scene',
     category: 'AI Generation',
     gradient: 'from-violet-500 to-purple-500',
+    image: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=800&h=800&fit=crop',
   },
   {
     id: 7,
     title: 'Enhanced Photo',
     category: 'Image Upscaling',
     gradient: 'from-yellow-500 to-orange-500',
+    image: 'https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?w=800&h=800&fit=crop',
   },
   {
     id: 8,
     title: 'Creative Edit',
     category: 'Object Removal',
     gradient: 'from-teal-500 to-cyan-500',
+    image: 'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=800&h=800&fit=crop',
   },
 ];
 
@@ -114,10 +122,17 @@ export default function Gallery() {
               whileHover={{ y: -8 }}
               className="group relative aspect-square rounded-2xl overflow-hidden cursor-pointer"
             >
-              {/* Gradient placeholder */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${image.gradient} opacity-80 group-hover:opacity-100 transition-opacity`} />
+              {/* Image */}
+              <img
+                src={image.image}
+                alt={image.title}
+                className="absolute inset-0 w-full h-full object-cover"
+              />
 
-              {/* Overlay */}
+              {/* Gradient overlay */}
+              <div className={`absolute inset-0 bg-gradient-to-br ${image.gradient} opacity-0 group-hover:opacity-30 transition-opacity`} />
+
+              {/* Dark overlay */}
               <div className="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-colors" />
 
               {/* Content */}

@@ -1,198 +1,367 @@
-# LWU AI Clone - AI Creative Suite Landing Page
+# LWU AI Clone - Full-Stack AI Creative Suite
 
-一个类似 lwu.ai 的现代化 AI 创意工具平台落地页。使用 Next.js 14、TypeScript、Tailwind CSS 和 Framer Motion 构建。
+一个功能完整的 AI 创意工具平台，类似 lwu.ai。包含用户认证、AI 工具、支付系统和作品管理等完整功能。
 
 ![Next.js](https://img.shields.io/badge/Next.js-14-black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.0-38bdf8)
 ![Framer Motion](https://img.shields.io/badge/Framer_Motion-11.0-ff0055)
+![Zustand](https://img.shields.io/badge/Zustand-State-orange)
+![Stripe](https://img.shields.io/badge/Stripe-Payment-purple)
 
-## 特性
+## ✨ 核心功能
 
-- ✨ **现代化暗色主题** - 精美的渐变色和毛玻璃效果
-- 🎨 **响应式设计** - 完美适配所有设备尺寸
-- ⚡ **流畅动画** - 使用 Framer Motion 实现的丝滑动画效果
-- 🚀 **高性能** - 基于 Next.js 14 和 Turbopack
-- 📱 **移动优先** - 优秀的移动端体验
-- 🎯 **SEO 优化** - 预渲染和优化的元数据
+### 🎨 前端功能
+- **现代化 UI** - 暗色主题、渐变色、毛玻璃效果
+- **响应式设计** - 完美适配所有设备
+- **流畅动画** - Framer Motion 实现的丝滑过渡
+- **SEO 优化** - 完整的元数据和 Open Graph 标签
 
-## 页面组件
+### 🔐 用户系统
+- **完整认证流程** - 注册、登录、登出
+- **用户状态管理** - Zustand 状态持久化
+- **用户仪表板** - 统计数据、快速操作
+- **个人资料** - 积分管理、订阅信息
 
-### 🏠 主要板块
+### 🤖 AI 工具
+- **图像生成** - 文本转图像（5 积分）
+- **背景移除** - 精确去除背景（2 积分）
+- **人脸增强** - 自动美化人像（3 积分）
+- **风格迁移** - 艺术风格转换（4 积分）
+- **图像放大** - 提升分辨率（3 积分）
+- **物体移除** - 无缝移除对象（3 积分）
 
-1. **Hero 区域**
-   - 引人注目的大标题和副标题
-   - 渐变文字效果
-   - 行动号召按钮
-   - 统计数据展示
-   - 动画背景渐变
+### 📁 文件管理
+- **拖拽上传** - React Dropzone 集成
+- **文件预览** - 即时预览上传内容
+- **格式支持** - PNG, JPG, JPEG, WebP
+- **大小限制** - 最大 10MB
 
-2. **功能展示 (Features)**
-   - 9个 AI 工具卡片
-   - 悬停动画效果
-   - 图标和渐变色
-   - 响应式网格布局
+### 💳 支付系统
+- **Stripe 集成** - 安全支付处理
+- **订阅管理** - 三个订阅层级
+  - Free: 10 积分/月
+  - Pro: 500 积分/月 ($19)
+  - Enterprise: 3000 积分/月 ($99)
+- **积分系统** - 自动扣除和充值
 
-3. **作品画廊 (Gallery)**
-   - 分类筛选功能
-   - 瀑布流布局
-   - 悬停展示详情
-   - 渐变占位图
+### 📊 作品管理
+- **创作历史** - 所有作品列表
+- **状态追踪** - 处理中/完成/失败
+- **下载功能** - 一键下载结果
+- **删除管理** - 作品管理功能
 
-4. **定价方案 (Pricing)**
-   - 三个订阅层级
-   - 特色标记（Most Popular）
-   - 功能列表对比
-   - CTA 按钮
+## 📦 技术栈
 
-5. **页头和页脚**
-   - 固定顶部导航
-   - 毛玻璃效果
-   - 社交媒体链接
-   - 多列链接布局
-
-## 技术栈
-
+### 前端
 - **框架**: Next.js 14 (App Router)
 - **语言**: TypeScript
 - **样式**: Tailwind CSS
 - **动画**: Framer Motion
+- **状态管理**: Zustand
 - **图标**: Lucide React
-- **工具**: clsx (条件类名)
 
-## 快速开始
+### 功能库
+- **文件上传**: React Dropzone
+- **支付**: Stripe
+- **表单**: React Hook Form (可选)
 
-### 安装依赖
+### 开发工具
+- **包管理**: npm
+- **代码规范**: ESLint
+- **类型检查**: TypeScript
+
+## 🚀 快速开始
+
+### 1. 克隆项目
+
+```bash
+git clone <repository-url>
+cd lwu-ai-clone
+```
+
+### 2. 安装依赖
 
 ```bash
 npm install
 ```
 
-### 启动开发服务器
+### 3. 环境变量配置
+
+复制 `.env.local.example` 为 `.env.local`:
+
+```bash
+cp .env.local.example .env.local
+```
+
+配置以下环境变量：
+
+```env
+# Stripe Keys (从 https://dashboard.stripe.com/apikeys 获取)
+STRIPE_SECRET_KEY=sk_test_your_key_here
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_your_key_here
+
+# Stripe Price IDs (在 Stripe 创建产品后获取)
+STRIPE_PRO_PRICE_ID=price_xxx
+STRIPE_ENTERPRISE_PRICE_ID=price_xxx
+
+# App URL
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+```
+
+### 4. 启动开发服务器
 
 ```bash
 npm run dev
 ```
 
-访问 [http://localhost:3000](http://localhost:3000) 查看效果
+访问 [http://localhost:3000](http://localhost:3000)
 
-### 构建生产版本
+### 5. 构建生产版本
 
 ```bash
 npm run build
 npm start
 ```
 
-## 项目结构
+## 📂 项目结构
 
 ```
 lwu-ai-clone/
-├── app/
-│   ├── globals.css          # 全局样式和主题变量
-│   ├── layout.tsx            # 根布局
-│   └── page.tsx              # 首页
-├── components/
-│   ├── Header.tsx            # 顶部导航
-│   ├── Hero.tsx              # 英雄区域
-│   ├── Features.tsx          # 功能展示
-│   ├── Gallery.tsx           # 作品画廊
-│   ├── Pricing.tsx           # 定价方案
-│   └── Footer.tsx            # 页脚
-├── public/                   # 静态资源
-└── package.json              # 依赖配置
+├── app/                          # Next.js App Router
+│   ├── api/                      # API 路由
+│   │   └── stripe/              # Stripe 支付 API
+│   ├── dashboard/               # 用户仪表板
+│   │   └── history/             # 创作历史
+│   ├── tools/                   # AI 工具页面
+│   ├── layout.tsx               # 根布局
+│   ├── page.tsx                 # 首页
+│   └── globals.css              # 全局样式
+├── components/                  # React 组件
+│   ├── AuthModal.tsx            # 认证模态框
+│   ├── Header.tsx               # 导航栏
+│   ├── Hero.tsx                 # 英雄区域
+│   ├── Features.tsx             # 功能展示
+│   ├── Gallery.tsx              # 作品画廊
+│   ├── Pricing.tsx              # 定价方案
+│   ├── Footer.tsx               # 页脚
+│   └── FileUpload.tsx           # 文件上传
+├── store/                       # 状态管理
+│   └── useStore.ts              # Zustand Store
+├── types/                       # TypeScript 类型
+│   └── index.ts                 # 类型定义
+├── lib/                         # 工具函数
+│   └── stripe.ts                # Stripe 配置
+└── public/                      # 静态资源
 ```
 
-## 自定义配置
+## 🎯 功能使用指南
 
-### 主题颜色
+### 用户注册/登录
 
-在 `app/globals.css` 中修改 CSS 变量：
+1. 点击 "Get Started" 或 "Sign In"
+2. 填写信息（演示模式存储在 localStorage）
+3. 自动登录并跳转到仪表板
+
+### 使用 AI 工具
+
+1. 登录后访问 `/tools`
+2. 选择想要使用的 AI 工具
+3. 上传图片或输入提示词
+4. 点击生成（消耗相应积分）
+5. 查看结果并下载
+
+### 升级订阅
+
+1. 访问首页的 Pricing 部分
+2. 选择合适的计划
+3. 点击升级按钮
+4. 在演示模式下会显示提示信息
+5. 生产环境会跳转到 Stripe Checkout
+
+### 查看历史
+
+1. 访问 `/dashboard/history`
+2. 查看所有创作记录
+3. 下载或删除作品
+
+## 🎨 自定义配置
+
+### 修改主题颜色
+
+编辑 `app/globals.css`:
 
 ```css
 :root {
   --background: #0a0a0a;
-  --foreground: #ededed;
-  --primary: #6366f1;      /* 主色调 */
+  --primary: #6366f1;       /* 主色调 */
   --primary-dark: #4f46e5;
-  --card-bg: #121212;
-  --card-border: #1f1f1f;
 }
 ```
 
-### 添加新功能
+### 添加新 AI 工具
 
-在 `components/Features.tsx` 的 `features` 数组中添加新项：
+编辑 `app/tools/page.tsx` 中的 `aiTools` 数组：
 
 ```typescript
 {
+  id: 'your-tool',
+  name: 'Your Tool',
+  description: 'Tool description',
   icon: YourIcon,
-  title: '功能名称',
-  description: '功能描述',
   color: 'from-blue-500 to-cyan-500',
+  credits: 3,
+  requiresUpload: true,
 }
 ```
 
 ### 修改定价方案
 
-在 `components/Pricing.tsx` 的 `plans` 数组中修改：
+编辑 `components/Pricing.tsx` 中的 `plans` 数组。
+
+## 🔧 集成真实 AI API
+
+当前版本使用模拟数据。要集成真实 AI API：
+
+### 1. 图像生成 (Replicate/Stability AI)
 
 ```typescript
-{
-  name: '方案名',
-  price: 19,
-  credits: 500,
-  features: ['功能1', '功能2'],
-  ...
+// app/api/generate/route.ts
+import Replicate from 'replicate';
+
+const replicate = new Replicate({
+  auth: process.env.REPLICATE_API_TOKEN,
+});
+
+export async function POST(req: Request) {
+  const { prompt } = await req.json();
+
+  const output = await replicate.run(
+    "stability-ai/sdxl:...",
+    { input: { prompt } }
+  );
+
+  return Response.json({ imageUrl: output });
 }
 ```
 
-## 部署
+### 2. 背景移除 (Remove.bg)
+
+```typescript
+import FormData from 'form-data';
+import fetch from 'node-fetch';
+
+const formData = new FormData();
+formData.append('image_file', imageBuffer, 'image.png');
+formData.append('size', 'auto');
+
+const response = await fetch('https://api.remove.bg/v1.0/removebg', {
+  method: 'POST',
+  headers: { 'X-Api-Key': process.env.REMOVEBG_API_KEY },
+  body: formData,
+});
+```
+
+## 📈 生产部署
 
 ### Vercel (推荐)
 
 1. 推送代码到 GitHub
 2. 在 Vercel 导入项目
-3. 点击部署
+3. 配置环境变量
+4. 点击部署
 
-### 其他平台
+### Docker
 
-```bash
-npm run build
-# 将 .next 文件夹和 node_modules 部署到服务器
+```dockerfile
+FROM node:18-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --only=production
+COPY . .
+RUN npm run build
+CMD ["npm", "start"]
 ```
 
-## 后续优化建议
+### 环境变量检查清单
 
-### 功能增强
-- [ ] 添加用户认证系统（NextAuth.js）
-- [ ] 集成真实的 AI API（Replicate, Stability AI）
-- [ ] 实现文件上传功能
-- [ ] 添加支付集成（Stripe）
-- [ ] 创建用户仪表板
-- [ ] 实现作品保存和分享
+- [x] `STRIPE_SECRET_KEY`
+- [x] `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`
+- [x] `STRIPE_PRO_PRICE_ID`
+- [x] `STRIPE_ENTERPRISE_PRICE_ID`
+- [x] `NEXT_PUBLIC_APP_URL`
 
-### 性能优化
-- [ ] 添加图片懒加载
-- [ ] 优化 Framer Motion 动画性能
-- [ ] 实现 ISR (增量静态再生成)
-- [ ] 添加 PWA 支持
-- [ ] 优化 SEO 元数据
+## 🧪 测试
 
-### UI/UX 改进
-- [ ] 添加深色/浅色主题切换
-- [ ] 实现更多微交互
-- [ ] 添加加载骨架屏
-- [ ] 优化移动端导航
-- [ ] 添加多语言支持
+### 测试账号
 
-## 许可证
+演示模式下，创建任意账号即可：
+
+- Email: test@example.com
+- Password: password123
+- Name: Test User
+
+### 测试支付
+
+使用 Stripe 测试卡：
+
+- 卡号: 4242 4242 4242 4242
+- 日期: 任意未来日期
+- CVC: 任意 3 位数字
+
+## 🚧 已知限制
+
+- **演示模式**: 当前使用 localStorage 存储数据
+- **AI 功能**: 使用占位图片模拟 AI 处理
+- **文件存储**: 需要集成 S3/Cloudflare R2
+- **数据库**: 需要添加 PostgreSQL/MongoDB
+
+## 🗺️ 路线图
+
+### Phase 1 ✅ (已完成)
+- [x] 基础 UI 和落地页
+- [x] 用户认证系统
+- [x] AI 工具界面
+- [x] 积分系统
+- [x] Stripe 集成准备
+
+### Phase 2 🚧 (进行中)
+- [ ] 真实 AI API 集成
+- [ ] 数据库集成 (Prisma + PostgreSQL)
+- [ ] 文件存储 (AWS S3)
+- [ ] Email 通知
+- [ ] 管理员仪表板
+
+### Phase 3 📅 (计划中)
+- [ ] API 访问
+- [ ] Webhook 处理
+- [ ] 批量处理
+- [ ] 团队功能
+- [ ] 高级分析
+
+## 📄 许可证
 
 MIT License
 
-## 作者
+## 👨‍💻 作者
 
-Built with ❤️ using Next.js and AI
+Built with ❤️ using Next.js, TypeScript, and AI
 
 ---
 
-**注意**: 这是一个演示项目，用于学习和展示目的。实际的 AI 功能需要集成相应的 AI 服务 API。
+## 🤝 贡献
+
+欢迎提交 Issues 和 Pull Requests!
+
+## 📞 支持
+
+如有问题，请提交 Issue 或联系开发团队。
+
+---
+
+**注意**: 这是一个功能完整的演示项目。生产环境使用需要：
+1. 配置真实的 AI API
+2. 集成数据库
+3. 设置文件存储
+4. 配置 Stripe webhook
+5. 添加错误监控
