@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Check, Zap, Crown, Rocket, Loader2 } from 'lucide-react';
 import { useSession } from 'next-auth/react';
+import toast from 'react-hot-toast';
 
 const plans = [
   {
@@ -72,7 +73,7 @@ export default function Pricing() {
     }
 
     if (status !== 'authenticated' || !session?.user) {
-      alert('Please sign in first');
+      toast.error('Please sign in first to upgrade your plan');
       return;
     }
 
@@ -97,13 +98,14 @@ export default function Pricing() {
 
       // Redirect to Stripe Checkout
       if (data.url) {
+        toast.success('Redirecting to checkout...');
         window.location.href = data.url;
       } else {
         throw new Error('No checkout URL returned');
       }
     } catch (error) {
       console.error('Checkout error:', error);
-      alert(error instanceof Error ? error.message : 'Something went wrong. Please try again.');
+      toast.error(error instanceof Error ? error.message : 'Something went wrong. Please try again.');
       setLoadingPlan(null);
     }
   };
