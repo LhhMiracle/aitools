@@ -82,7 +82,7 @@ model Generation {
   type        String   // image-generation, background-removal, etc.
   status      String   @default("processing") // processing, completed, failed
   prompt      String?
-  inputUrl    String?  // Original/input image URL
+  originalUrl String?  // Original/input image URL
   resultUrl   String?
   parameters  String?  // JSON string for generation parameters
   creditsUsed Int
