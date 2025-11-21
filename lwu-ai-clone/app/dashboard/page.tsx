@@ -14,6 +14,7 @@ import {
   Settings,
   Key,
   Gift,
+  CreditCard,
 } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import Header from '@/components/Header';
@@ -204,12 +205,12 @@ export default function DashboardPage() {
             </Link>
 
             <Link
-              href="/#pricing"
+              href="/dashboard/billing"
               className="group p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-white/20 transition-all"
             >
-              <Zap className="w-8 h-8 text-yellow-400 mb-3 group-hover:scale-110 transition-transform" />
-              <h3 className="text-lg font-semibold mb-1">Get More Credits</h3>
-              <p className="text-sm text-gray-400">Upgrade your plan</p>
+              <CreditCard className="w-8 h-8 text-green-400 mb-3 group-hover:scale-110 transition-transform" />
+              <h3 className="text-lg font-semibold mb-1">Billing</h3>
+              <p className="text-sm text-gray-400">Manage subscription</p>
             </Link>
           </div>
         </motion.div>
