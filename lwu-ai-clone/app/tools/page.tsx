@@ -9,6 +9,11 @@ import {
   Mic,
   ArrowRight,
   Sparkles,
+  Scissors,
+  Palette,
+  User,
+  Users,
+  Trash2,
 } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import Header from '@/components/Header';
@@ -54,6 +59,46 @@ const tools = [
     icon: Mic,
     color: 'from-indigo-500 to-purple-500',
     credits: 1,
+  },
+  {
+    id: 'hair-style',
+    name: 'Hair Style Transform',
+    description: 'Transform hair styles with AI - try different hairstyles instantly',
+    icon: Scissors,
+    color: 'from-pink-500 to-rose-500',
+    credits: 4,
+  },
+  {
+    id: 'cartoon-style',
+    name: 'Cartoon Style',
+    description: 'Convert photos to cartoon/anime style',
+    icon: Palette,
+    color: 'from-yellow-500 to-orange-500',
+    credits: 3,
+  },
+  {
+    id: 'portrait-enhance',
+    name: 'Portrait Enhance',
+    description: 'Enhance and beautify portraits with AI',
+    icon: User,
+    color: 'from-cyan-500 to-blue-500',
+    credits: 2,
+  },
+  {
+    id: 'face-swap',
+    name: 'Face Swap',
+    description: 'Swap faces between two photos',
+    icon: Users,
+    color: 'from-violet-500 to-purple-500',
+    credits: 4,
+  },
+  {
+    id: 'object-removal',
+    name: 'Object Removal',
+    description: 'Remove unwanted objects from images',
+    icon: Trash2,
+    color: 'from-red-500 to-pink-500',
+    credits: 3,
   },
 ];
 
@@ -129,7 +174,7 @@ export default function ToolsPage() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
+          transition={{ delay: 1.1 }}
           className="mt-12 p-6 rounded-2xl bg-gradient-to-br from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 max-w-4xl mx-auto"
         >
           <h3 className="text-xl font-bold mb-2">Need More Credits?</h3>

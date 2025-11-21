@@ -11,6 +11,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/tools/background-removal',
     '/tools/image-to-video',
     '/tools/text-to-speech',
+    '/tools/hair-style',
+    '/tools/cartoon-style',
+    '/tools/portrait-enhance',
+    '/tools/face-swap',
+    '/tools/object-removal',
   ];
 
   return routes.map((route) => ({

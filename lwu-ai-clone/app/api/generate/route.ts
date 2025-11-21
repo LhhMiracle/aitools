@@ -10,6 +10,11 @@ import {
   removeBackground,
   imageToVideo,
   textToSpeech,
+  hairStyleTransform,
+  cartoonStyleTransform,
+  portraitEnhance,
+  faceSwap,
+  objectRemoval,
 } from '@/lib/replicate';
 import { fileToDataUri } from '@/lib/fileUtils';
 
@@ -135,6 +140,33 @@ async function processGeneration(
         break;
       case 'text-to-speech':
         output = await textToSpeech(params);
+        break;
+      case 'hair-style':
+        output = await hairStyleTransform(params);
+        break;
+      case 'cartoon-style':
+        output = await cartoonStyleTransform(params);
+        break;
+      case 'portrait-enhance':
+        output = await portraitEnhance(params);
+        break;
+      case 'face-swap':
+        // Handle dual image upload for face swap
+        if (params.targetImage) {
+          try {
+            params.targetImage = await fileToDataUri(params.targetImage);
+          } catch (error) {
+            console.error('Failed to convert target image:', error);
+            throw new Error('Failed to process target image');
+          }
+        }
+        output = await faceSwap({
+          sourceImage: params.image,
+          targetImage: params.targetImage,
+        });
+        break;
+      case 'object-removal':
+        output = await objectRemoval(params);
         break;
       default:
         throw new Error(`Unsupported tool: ${toolId}`);

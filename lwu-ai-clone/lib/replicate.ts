@@ -39,6 +39,37 @@ export const AI_MODELS = {
     description: 'Convert text to natural speech',
     credits: 1,
   },
+  // New AI Tools
+  'hair-style': {
+    id: 'tencentarc/photomaker:ddfc2b08d209f9fa8c1uj2ae5fd3ad10c1be0de2evy4j8c0ba3f93fe54c7cf',
+    name: 'Hair Style Transfer',
+    description: 'Transform hair styles with AI',
+    credits: 4,
+  },
+  'cartoon-style': {
+    id: 'cjwbw/anything-v3.0:09a5805203f4c12da649ec1923bb7729517ca25fcac790e640eaa9ed66573b65',
+    name: 'Cartoon Style',
+    description: 'Convert photos to cartoon/anime style',
+    credits: 3,
+  },
+  'portrait-enhance': {
+    id: 'tencentarc/gfpgan:0fbacf7afc6c144e5be9767cff80f25aff23e52b0708f17e20f9879b2f21516c',
+    name: 'Portrait Enhance',
+    description: 'Enhance and beautify portraits',
+    credits: 2,
+  },
+  'face-swap': {
+    id: 'lucataco/facefusion:a2c7f9df13e98f5b589c7b17d81b8e8a2d3f5d6b8c1e2f9a4b5d7e8f1a2c3b4d',
+    name: 'Face Swap',
+    description: 'Swap faces between two photos',
+    credits: 4,
+  },
+  'object-removal': {
+    id: 'stability-ai/stable-diffusion-inpainting:95b7223104132402a9ae91cc677285bc5eb997834bd2349fa486f53910fd68b3',
+    name: 'Object Removal',
+    description: 'Remove unwanted objects from images',
+    credits: 3,
+  },
 } as const;
 
 export type AIToolId = keyof typeof AI_MODELS;
@@ -68,6 +99,32 @@ interface TextToSpeechParams {
   text: string;
   speakerWav?: string;
   language?: string;
+}
+
+interface HairStyleParams {
+  image: string;
+  hairStyle: string;
+  prompt?: string;
+}
+
+interface CartoonStyleParams {
+  image: string;
+  style?: string;
+}
+
+interface PortraitEnhanceParams {
+  image: string;
+}
+
+interface FaceSwapParams {
+  sourceImage: string;
+  targetImage: string;
+}
+
+interface ObjectRemovalParams {
+  image: string;
+  mask: string;
+  prompt?: string;
 }
 
 export async function generateImage(params: GenerateImageParams) {
@@ -133,6 +190,83 @@ export async function textToSpeech(params: TextToSpeechParams) {
         text: params.text,
         speaker_wav: params.speakerWav,
         language: params.language || 'en',
+      },
+    }
+  );
+  return output;
+}
+
+// New AI Tool Functions
+
+export async function hairStyleTransform(params: HairStyleParams) {
+  const output = await replicate.run(
+    AI_MODELS['hair-style'].id as any,
+    {
+      input: {
+        input_image: params.image,
+        prompt: `a person with ${params.hairStyle} hair style, ${params.prompt || 'high quality, realistic'}`,
+        style_name: 'Photographic (Default)',
+        num_steps: 50,
+        style_strength_ratio: 20,
+        guidance_scale: 5,
+      },
+    }
+  );
+  return output;
+}
+
+export async function cartoonStyleTransform(params: CartoonStyleParams) {
+  const output = await replicate.run(
+    AI_MODELS['cartoon-style'].id as any,
+    {
+      input: {
+        prompt: `anime style, cartoon, ${params.style || 'high quality illustration'}`,
+        image: params.image,
+        num_inference_steps: 20,
+        guidance_scale: 7,
+      },
+    }
+  );
+  return output;
+}
+
+export async function portraitEnhance(params: PortraitEnhanceParams) {
+  const output = await replicate.run(
+    AI_MODELS['portrait-enhance'].id as any,
+    {
+      input: {
+        img: params.image,
+        version: 'v1.4',
+        scale: 2,
+      },
+    }
+  );
+  return output;
+}
+
+export async function faceSwap(params: FaceSwapParams) {
+  const output = await replicate.run(
+    AI_MODELS['face-swap'].id as any,
+    {
+      input: {
+        source_image: params.sourceImage,
+        target_image: params.targetImage,
+      },
+    }
+  );
+  return output;
+}
+
+export async function objectRemoval(params: ObjectRemovalParams) {
+  const output = await replicate.run(
+    AI_MODELS['object-removal'].id as any,
+    {
+      input: {
+        image: params.image,
+        mask: params.mask,
+        prompt: params.prompt || 'background, clean, seamless',
+        num_inference_steps: 50,
+        guidance_scale: 7.5,
       },
     }
   );
