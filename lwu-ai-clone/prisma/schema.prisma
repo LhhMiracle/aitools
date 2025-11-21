@@ -12,17 +12,28 @@ datasource db {
 
 // User model
 model User {
-  id               String    @id @default(cuid())
-  name             String?
-  email            String    @unique
-  emailVerified    DateTime?
-  image            String?
-  password         String?   // For credential login
-  credits          Int       @default(10)
-  plan             String    @default("FREE") // FREE, PRO, PREMIUM
-  stripeCustomerId String?   @unique // Stripe customer ID for payments
-  createdAt        DateTime  @default(now())
-  updatedAt        DateTime  @updatedAt
+  id                      String    @id @default(cuid())
+  name                    String?
+  email                   String    @unique
+  emailVerified           DateTime?
+  image                   String?
+  password                String?   // For credential login
+  credits                 Int       @default(10)
+  plan                    String    @default("FREE") // FREE, PRO, PREMIUM
+  stripeCustomerId        String?   @unique // Stripe customer ID for payments
+  stripeSubscriptionId    String?   @unique // Stripe subscription ID
+  subscriptionStatus      String?   // active, cancelling, cancelled
+
+  // Password reset
+  resetToken              String?
+  resetTokenExpiry        DateTime?
+
+  // Email verification
+  verificationToken       String?
+  verificationTokenExpiry DateTime?
+
+  createdAt               DateTime  @default(now())
+  updatedAt               DateTime  @updatedAt
 
   accounts      Account[]
   sessions      Session[]
