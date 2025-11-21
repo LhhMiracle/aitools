@@ -11,6 +11,7 @@ import {
   Zap,
   Sparkles,
   GalleryVerticalEnd,
+  Settings,
 } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import Header from '@/components/Header';

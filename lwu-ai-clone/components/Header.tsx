@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Sparkles, User, LogOut, LayoutDashboard, Coins } from 'lucide-react';
+import { Sparkles, User, LogOut, LayoutDashboard, Coins, Settings } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSession, signOut } from 'next-auth/react';
 import AuthModal from './AuthModal';
@@ -112,6 +112,14 @@ export default function Header() {
                         >
                           <LayoutDashboard className="w-4 h-4" />
                           Dashboard
+                        </Link>
+                        <Link
+                          href="/dashboard/settings"
+                          className="flex items-center gap-3 px-4 py-3 hover:bg-white/5 transition-colors"
+                          onClick={() => setShowUserMenu(false)}
+                        >
+                          <Settings className="w-4 h-4" />
+                          Settings
                         </Link>
                         <button
                           onClick={handleSignOut}
