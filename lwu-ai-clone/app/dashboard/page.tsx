@@ -12,6 +12,8 @@ import {
   Sparkles,
   GalleryVerticalEnd,
   Settings,
+  Key,
+  Gift,
 } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import Header from '@/components/Header';
@@ -155,7 +157,7 @@ export default function DashboardPage() {
           className="mb-12"
         >
           <h2 className="text-2xl font-bold mb-6">Quick Actions</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <Link
               href="/tools"
               className="group p-6 rounded-2xl bg-gradient-to-br from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 hover:border-indigo-500/40 transition-all"
@@ -181,6 +183,24 @@ export default function DashboardPage() {
               <GalleryVerticalEnd className="w-8 h-8 text-purple-400 mb-3 group-hover:scale-110 transition-transform" />
               <h3 className="text-lg font-semibold mb-1">My Gallery</h3>
               <p className="text-sm text-gray-400">Showcase your best work</p>
+            </Link>
+
+            <Link
+              href="/dashboard/referrals"
+              className="group p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-white/20 transition-all"
+            >
+              <Gift className="w-8 h-8 text-pink-400 mb-3 group-hover:scale-110 transition-transform" />
+              <h3 className="text-lg font-semibold mb-1">Refer & Earn</h3>
+              <p className="text-sm text-gray-400">Invite friends, earn credits</p>
+            </Link>
+
+            <Link
+              href="/dashboard/api-keys"
+              className="group p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-white/20 transition-all"
+            >
+              <Key className="w-8 h-8 text-cyan-400 mb-3 group-hover:scale-110 transition-transform" />
+              <h3 className="text-lg font-semibold mb-1">API Keys</h3>
+              <p className="text-sm text-gray-400">Manage your API access</p>
             </Link>
 
             <Link
