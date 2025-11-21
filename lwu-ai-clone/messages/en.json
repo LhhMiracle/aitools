@@ -1,0 +1,214 @@
+{
+  "common": {
+    "appName": "LWU.AI",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "close": "Close",
+    "submit": "Submit",
+    "reset": "Reset",
+    "copy": "Copy",
+    "copied": "Copied!",
+    "download": "Download",
+    "share": "Share",
+    "viewAll": "View All",
+    "learnMore": "Learn More"
+  },
+  "nav": {
+    "home": "Home",
+    "tools": "Tools",
+    "pricing": "Pricing",
+    "dashboard": "Dashboard",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "signOut": "Sign Out",
+    "settings": "Settings",
+    "profile": "Profile"
+  },
+  "hero": {
+    "title": "Transform Your Ideas Into",
+    "titleHighlight": "Stunning Visuals",
+    "subtitle": "Create amazing images, remove backgrounds, enhance photos, and more with our powerful AI tools. No design skills required.",
+    "cta": "Start Creating",
+    "secondaryCta": "View Tools",
+    "stats": {
+      "users": "Active Users",
+      "images": "Images Generated",
+      "rating": "User Rating"
+    }
+  },
+  "features": {
+    "title": "Powerful AI Tools",
+    "subtitle": "Everything you need to create stunning visuals",
+    "imageGeneration": {
+      "title": "Image Generation",
+      "description": "Create stunning images from text descriptions using advanced AI models"
+    },
+    "backgroundRemoval": {
+      "title": "Background Removal",
+      "description": "Remove backgrounds instantly with one click"
+    },
+    "imageUpscale": {
+      "title": "Image Upscaling",
+      "description": "Enhance and upscale your images to 4K quality"
+    },
+    "styleTransfer": {
+      "title": "Style Transfer",
+      "description": "Apply artistic styles to your photos"
+    }
+  },
+  "pricing": {
+    "title": "Simple, Transparent",
+    "titleHighlight": "Pricing",
+    "subtitle": "Choose the perfect plan for your creative needs. All plans include a 7-day free trial.",
+    "monthly": "Monthly",
+    "yearly": "Yearly",
+    "save": "Save 20%",
+    "popular": "Most Popular",
+    "perMonth": "/month",
+    "billedYearly": "Billed {price}/year",
+    "creditsPerMonth": "{credits} credits/month",
+    "getStarted": "Get Started",
+    "startTrial": "Start Free Trial",
+    "contactSales": "Contact Sales",
+    "plans": {
+      "free": {
+        "name": "Free",
+        "description": "Perfect for trying out our AI tools"
+      },
+      "pro": {
+        "name": "Pro",
+        "description": "Best for professionals and creators"
+      },
+      "enterprise": {
+        "name": "Enterprise",
+        "description": "For teams and high-volume users"
+      }
+    },
+    "features": {
+      "credits": "Monthly Credits",
+      "processing": "Processing Speed",
+      "tools": "AI Tools Access",
+      "exports": "Export Quality",
+      "api": "API Access",
+      "support": "Support",
+      "commercial": "Commercial Use",
+      "team": "Team Members",
+      "storage": "Cloud Storage",
+      "history": "History Retention"
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "q1": "What happens when I run out of credits?",
+      "a1": "You can purchase additional credit packs or upgrade your plan. Your current creations won't be affected.",
+      "q2": "Can I switch plans at any time?",
+      "a2": "Yes! You can upgrade or downgrade your plan at any time. Changes take effect on your next billing cycle.",
+      "q3": "Is there a free trial?",
+      "a3": "Yes, all paid plans include a 7-day free trial. Cancel anytime during the trial and you won't be charged."
+    }
+  },
+  "dashboard": {
+    "welcome": "Welcome back, {name}!",
+    "subtitle": "Here's what's happening with your AI creations today.",
+    "stats": {
+      "totalCredits": "Total Credits",
+      "currentPlan": "Current Plan",
+      "creations": "Creations",
+      "thisMonth": "This Month"
+    },
+    "quickActions": {
+      "title": "Quick Actions",
+      "createNew": "Create New",
+      "createNewDesc": "Start a new AI creation",
+      "viewHistory": "View History",
+      "viewHistoryDesc": "Browse past creations",
+      "myGallery": "My Gallery",
+      "myGalleryDesc": "Showcase your best work",
+      "referEarn": "Refer & Earn",
+      "referEarnDesc": "Invite friends, earn credits",
+      "apiKeys": "API Keys",
+      "apiKeysDesc": "Manage your API access",
+      "billing": "Billing",
+      "billingDesc": "Manage subscription"
+    },
+    "recentCreations": "Recent Creations",
+    "noCreations": "No creations yet",
+    "noCreationsDesc": "Start creating amazing AI-powered content!",
+    "createNow": "Create Now"
+  },
+  "auth": {
+    "signIn": {
+      "title": "Welcome back",
+      "subtitle": "Sign in to your account to continue",
+      "email": "Email address",
+      "password": "Password",
+      "rememberMe": "Remember me",
+      "forgotPassword": "Forgot password?",
+      "noAccount": "Don't have an account?",
+      "signUp": "Sign up"
+    },
+    "signUp": {
+      "title": "Create an account",
+      "subtitle": "Start your creative journey with LWU.AI",
+      "name": "Full name",
+      "email": "Email address",
+      "password": "Password",
+      "confirmPassword": "Confirm password",
+      "terms": "I agree to the Terms of Service and Privacy Policy",
+      "hasAccount": "Already have an account?",
+      "signIn": "Sign in"
+    },
+    "forgotPassword": {
+      "title": "Forgot password?",
+      "subtitle": "No worries, we'll send you reset instructions.",
+      "email": "Email address",
+      "submit": "Reset password",
+      "backToSignIn": "Back to sign in",
+      "checkEmail": "Check your email",
+      "emailSent": "We've sent password reset instructions to"
+    },
+    "resetPassword": {
+      "title": "Set new password",
+      "subtitle": "Your new password must be different from previously used passwords.",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm password",
+      "submit": "Reset password",
+      "success": "Password Reset!",
+      "successMessage": "Your password has been successfully reset. You can now sign in with your new password."
+    },
+    "verifyEmail": {
+      "title": "Verify your email",
+      "checking": "Verifying your email...",
+      "success": "Email Verified!",
+      "successMessage": "Your email has been successfully verified. You can now access all features of your account.",
+      "error": "Verification Failed",
+      "goToDashboard": "Go to Dashboard"
+    }
+  },
+  "footer": {
+    "description": "Transform your creative vision with AI-powered tools. Generate, enhance, and transform images in seconds.",
+    "product": "Product",
+    "resources": "Resources",
+    "company": "Company",
+    "legal": "Legal",
+    "newsletter": {
+      "title": "Stay up to date",
+      "subtitle": "Get the latest news and updates from LWU.AI",
+      "placeholder": "Enter your email",
+      "subscribe": "Subscribe"
+    },
+    "copyright": "© {year} LWU.AI. All rights reserved."
+  }
+}

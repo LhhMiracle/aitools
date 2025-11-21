@@ -5,10 +5,13 @@ import { Sparkles, User, LogOut, LayoutDashboard, Coins, Settings } from 'lucide
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSession, signOut } from 'next-auth/react';
 import AuthModal from './AuthModal';
+import LanguageSwitcher from './LanguageSwitcher';
+import { useLocale } from '@/i18n/LocaleProvider';
 import Link from 'next/link';
 
 export default function Header() {
   const { data: session, status } = useSession();
+  const { locale, setLocale } = useLocale();
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [authMode, setAuthMode] = useState<'login' | 'register'>('login');
   const [showUserMenu, setShowUserMenu] = useState(false);
@@ -72,6 +75,7 @@ export default function Header() {
 
             {/* CTA Buttons */}
             <div className="flex items-center gap-4">
+              <LanguageSwitcher currentLocale={locale} onLocaleChange={setLocale} />
               {isLoading ? (
                 <div className="w-32 h-10 bg-white/5 rounded-full animate-pulse" />
               ) : isAuthenticated && session?.user ? (
