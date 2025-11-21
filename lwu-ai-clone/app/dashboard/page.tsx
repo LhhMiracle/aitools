@@ -10,6 +10,7 @@ import {
   TrendingUp,
   Zap,
   Sparkles,
+  GalleryVerticalEnd,
 } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import Header from '@/components/Header';
@@ -153,7 +154,7 @@ export default function DashboardPage() {
           className="mb-12"
         >
           <h2 className="text-2xl font-bold mb-6">Quick Actions</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <Link
               href="/tools"
               className="group p-6 rounded-2xl bg-gradient-to-br from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 hover:border-indigo-500/40 transition-all"
@@ -170,6 +171,15 @@ export default function DashboardPage() {
               <Clock className="w-8 h-8 text-gray-400 mb-3 group-hover:scale-110 transition-transform" />
               <h3 className="text-lg font-semibold mb-1">View History</h3>
               <p className="text-sm text-gray-400">Browse past creations</p>
+            </Link>
+
+            <Link
+              href="/dashboard/gallery"
+              className="group p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-white/20 transition-all"
+            >
+              <GalleryVerticalEnd className="w-8 h-8 text-purple-400 mb-3 group-hover:scale-110 transition-transform" />
+              <h3 className="text-lg font-semibold mb-1">My Gallery</h3>
+              <p className="text-sm text-gray-400">Showcase your best work</p>
             </Link>
 
             <Link
