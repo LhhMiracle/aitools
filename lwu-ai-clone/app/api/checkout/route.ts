@@ -103,6 +103,12 @@ export async function POST(request: NextRequest) {
       success_url: `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/payment/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/payment/cancelled`,
       metadata,
+      // Pass metadata to subscription so webhook handler can access it
+      ...(type === 'subscription' && {
+        subscription_data: {
+          metadata,
+        },
+      }),
     });
 
     return NextResponse.json({
