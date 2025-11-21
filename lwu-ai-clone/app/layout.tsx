@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/Providers";
 import { ToastProvider } from "@/components/ToastProvider";
 import ScrollToTop from "@/components/ScrollToTop";
+import Analytics from "@/components/Analytics";
 import { generatePageMetadata } from "@/lib/seo";
 
 const geistSans = Geist({
@@ -32,6 +34,9 @@ export default function RootLayout({
           {children}
           <ToastProvider />
           <ScrollToTop />
+          <Suspense fallback={null}>
+            <Analytics />
+          </Suspense>
         </Providers>
       </body>
     </html>
