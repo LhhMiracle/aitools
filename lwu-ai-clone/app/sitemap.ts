@@ -16,6 +16,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/tools/portrait-enhance',
     '/tools/face-swap',
     '/tools/object-removal',
+    '/tools/scene-composite',
+    '/tools/photo-animation',
+    '/tools/special-effects',
   ];
 
   return routes.map((route) => ({

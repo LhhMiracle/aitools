@@ -70,6 +70,24 @@ export const AI_MODELS = {
     description: 'Remove unwanted objects from images',
     credits: 3,
   },
+  'scene-composite': {
+    id: 'stability-ai/sdxl:39ed52f2a78e934b3ba6e2a89f5b1c712de7dfea535525255b1aa35c5565e08b',
+    name: 'Scene Composite',
+    description: 'Place yourself in famous locations around the world',
+    credits: 4,
+  },
+  'photo-animation': {
+    id: 'andreasjansson/stable-diffusion-animation:ca1f5e306e5721e19c473e0d094e6603f1b63001b3b3c0e2e5d4f4a3d7e1e4e7',
+    name: 'Photo Animation',
+    description: 'Animate photos with expressions and movements',
+    credits: 5,
+  },
+  'special-effects': {
+    id: 'stability-ai/sdxl:39ed52f2a78e934b3ba6e2a89f5b1c712de7dfea535525255b1aa35c5565e08b',
+    name: 'Special Effects',
+    description: 'Add magical effects like fire, lightning, and more',
+    credits: 3,
+  },
 } as const;
 
 export type AIToolId = keyof typeof AI_MODELS;
@@ -125,6 +143,24 @@ interface ObjectRemovalParams {
   image: string;
   mask: string;
   prompt?: string;
+}
+
+interface SceneCompositeParams {
+  image: string;
+  scene: string;
+  prompt?: string;
+}
+
+interface PhotoAnimationParams {
+  image: string;
+  animationType: string;
+  intensity?: number;
+}
+
+interface SpecialEffectsParams {
+  image: string;
+  effect: string;
+  intensity?: number;
 }
 
 export async function generateImage(params: GenerateImageParams) {
@@ -267,6 +303,84 @@ export async function objectRemoval(params: ObjectRemovalParams) {
         prompt: params.prompt || 'background, clean, seamless',
         num_inference_steps: 50,
         guidance_scale: 7.5,
+      },
+    }
+  );
+  return output;
+}
+
+export async function sceneComposite(params: SceneCompositeParams) {
+  // Scene locations mapping
+  const scenePrompts: Record<string, string> = {
+    'eiffel-tower': 'standing in front of the Eiffel Tower in Paris, France, sunny day, tourists',
+    'great-wall': 'standing on the Great Wall of China, mountain landscape, historic',
+    'statue-liberty': 'standing near the Statue of Liberty, New York City, harbor view',
+    'taj-mahal': 'standing in front of the Taj Mahal, India, marble architecture, reflecting pool',
+    'colosseum': 'standing at the Roman Colosseum, Italy, ancient architecture',
+    'pyramids': 'standing near the Great Pyramids of Giza, Egypt, desert landscape',
+    'big-ben': 'standing near Big Ben and Westminster, London, UK, classic architecture',
+    'sydney-opera': 'standing at Sydney Opera House, Australia, harbor bridge view',
+    'mount-fuji': 'standing with Mount Fuji in background, Japan, cherry blossoms',
+    'santorini': 'standing in Santorini, Greece, white buildings, blue domes, sea view',
+  };
+
+  const sceneDescription = scenePrompts[params.scene] || params.scene;
+
+  const output = await replicate.run(
+    AI_MODELS['scene-composite'].id as any,
+    {
+      input: {
+        prompt: `photo of a person ${sceneDescription}, ${params.prompt || 'high quality, realistic, natural lighting'}`,
+        image: params.image,
+        num_inference_steps: 30,
+        guidance_scale: 7.5,
+        strength: 0.75,
+      },
+    }
+  );
+  return output;
+}
+
+export async function photoAnimation(params: PhotoAnimationParams) {
+  const output = await replicate.run(
+    AI_MODELS['photo-animation'].id as any,
+    {
+      input: {
+        input_image: params.image,
+        animation_prompts: params.animationType,
+        fps: 12,
+        num_frames: 24,
+        motion_scale: params.intensity || 1.0,
+      },
+    }
+  );
+  return output;
+}
+
+export async function specialEffects(params: SpecialEffectsParams) {
+  // Effect mappings
+  const effectPrompts: Record<string, string> = {
+    'fire': 'surrounded by flames and fire effects, dramatic lighting',
+    'lightning': 'with lightning bolts and electrical energy around',
+    'ice': 'with ice and frost effects, frozen particles',
+    'magic': 'with magical sparkles and glowing particles',
+    'neon': 'with neon glow effects and cyberpunk lighting',
+    'galaxy': 'with galaxy and cosmic background, stars and nebula',
+    'underwater': 'underwater scene with bubbles and light rays',
+    'autumn': 'with falling autumn leaves, golden colors',
+  };
+
+  const effectDescription = effectPrompts[params.effect] || params.effect;
+
+  const output = await replicate.run(
+    AI_MODELS['special-effects'].id as any,
+    {
+      input: {
+        prompt: `photo ${effectDescription}, ${params.intensity === 2 ? 'intense' : 'subtle'} effect, high quality`,
+        image: params.image,
+        num_inference_steps: 30,
+        guidance_scale: 7.5,
+        strength: (params.intensity || 1) * 0.4,
       },
     }
   );

@@ -15,6 +15,9 @@ import {
   portraitEnhance,
   faceSwap,
   objectRemoval,
+  sceneComposite,
+  photoAnimation,
+  specialEffects,
 } from '@/lib/replicate';
 import { fileToDataUri } from '@/lib/fileUtils';
 
@@ -167,6 +170,15 @@ async function processGeneration(
         break;
       case 'object-removal':
         output = await objectRemoval(params);
+        break;
+      case 'scene-composite':
+        output = await sceneComposite(params);
+        break;
+      case 'photo-animation':
+        output = await photoAnimation(params);
+        break;
+      case 'special-effects':
+        output = await specialEffects(params);
         break;
       default:
         throw new Error(`Unsupported tool: ${toolId}`);

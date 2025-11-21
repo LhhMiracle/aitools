@@ -14,6 +14,9 @@ import {
   User,
   Users,
   Trash2,
+  MapPin,
+  Film,
+  Flame,
 } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import Header from '@/components/Header';
@@ -100,6 +103,30 @@ const tools = [
     color: 'from-red-500 to-pink-500',
     credits: 3,
   },
+  {
+    id: 'scene-composite',
+    name: 'Scene Composite',
+    description: 'Place yourself in famous locations around the world',
+    icon: MapPin,
+    color: 'from-teal-500 to-emerald-500',
+    credits: 4,
+  },
+  {
+    id: 'photo-animation',
+    name: 'Photo Animation',
+    description: 'Animate photos with expressions and movements',
+    icon: Film,
+    color: 'from-amber-500 to-yellow-500',
+    credits: 5,
+  },
+  {
+    id: 'special-effects',
+    name: 'Special Effects',
+    description: 'Add magical effects like fire, lightning, and more',
+    icon: Flame,
+    color: 'from-orange-500 to-amber-500',
+    credits: 3,
+  },
 ];
 
 export default function ToolsPage() {
@@ -174,7 +201,7 @@ export default function ToolsPage() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.1 }}
+          transition={{ delay: 1.4 }}
           className="mt-12 p-6 rounded-2xl bg-gradient-to-br from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 max-w-4xl mx-auto"
         >
           <h3 className="text-xl font-bold mb-2">Need More Credits?</h3>
